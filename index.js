@@ -1,3 +1,1 @@
-process.env.PORT = 8000
-
-require('./server')
+module.export = require('./socket.io-worker')

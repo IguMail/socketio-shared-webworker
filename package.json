@@ -1,5 +1,5 @@
 {
-  "name": "socketio-webworker",
+  "name": "socketio-shared-webworker",
   "version": "1.0.0",
   "description": "SocketIO client running inside a shared WebWorker thread",
   "main": "index.js",
