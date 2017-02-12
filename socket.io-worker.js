@@ -15,9 +15,9 @@ function startWorker() {
 
     }, false)
 
-    worker.onerror = function (evt) {
-        console.log('worker error', evt)
-        events.emit(event.data.type, event.data.message)
+    worker.onerror = function (event) {
+        console.log('worker error', event)
+        events.emit('error', event)
     }
 
     worker.port.start()
