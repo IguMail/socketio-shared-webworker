@@ -2,7 +2,16 @@
 
 console.log('Loading shared worker')
 
-importScripts('node_modules/socket.io-client/dist/socket.io.js')
+// try each possible socket.io location
+try {
+    importScripts('node_modules/socket.io-client/dist/socket.io.js')
+} catch(e) {
+    try {
+        importScripts('/node_modules/socket.io-client/dist/socket.io.js')
+    } catch(e) {
+        importScripts('../../node_modules/socket.io-client/dist/socket.io.js')
+    }
+}
 
 var socket = io(self.name),
     ports = [],

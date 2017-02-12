@@ -1,7 +1,7 @@
 'use strict'
 
 var ws = wio('http://localhost:8000/')
-ws.setWorker('shared-worker.js?' + Math.random())
+ws.setWorker('shared-worker.js')
 
 ws.on('connect', function() {
     console.log('connected!')

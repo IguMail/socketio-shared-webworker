@@ -1,6 +1,7 @@
 'use strict';
 
 const EventEmitter = require('eventemitter3')
+const io = require('socket.io-client')
 
 let uri, workerUri, events, worker, socket = {}
 

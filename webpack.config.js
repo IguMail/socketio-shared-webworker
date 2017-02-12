@@ -9,7 +9,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'socket.io-worker.bundle.js',
+    filename: '[name].bundle.js',
     publicPath: '/dist/'
   },
   plugins: [
