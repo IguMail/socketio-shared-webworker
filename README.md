@@ -76,9 +76,9 @@ To develop:
 
 `$ npm install`
 
-`$ npm start` Starts the server
+`$ npm start` Starts the socket.io server
 
-`$ npm run dev` Starts dev server with HMR
+`$ npm run dev` Starts development server with HMR
 
 In chrome visit the URL: chrome://inspect/#workers so see shared webworkers and inspect, debug.
 Visit the `index.html` in the browser for the demo. 
