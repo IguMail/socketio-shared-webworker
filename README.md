@@ -6,6 +6,10 @@ Running Socket.io in a shared webworker allows you to share a single Socket.io w
 https://socket.io/
 https://github.com/socketio/socket.io-client
 
+**Quick Install**
+
+`<script src="https://rawgit.com/IguMail/socketio-shared-webworker/master/dist/socket.io-worker.bundle.js"></script>`
+
 **Reason**
 
 * It's more efficient to have a single websocket connection
@@ -60,6 +64,11 @@ This is experimental prototype.
 To use in your project:
 
 `npm install --save socketio-shared-webworker`
+
+You can use `require('socketio-shared-webworker')` in node or use the prebuilt version directly `<script src="dist/socket.io-worker.bundle.js"></script>`. 
+Note that you need to include socket.io as well. 
+
+See `index.html` for an example. 
 
 To develop:
 
