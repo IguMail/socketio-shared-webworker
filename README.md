@@ -19,8 +19,11 @@ https://github.com/socketio/socket.io-client/blob/master/docs/API.md
 All events to/from socket.io will be forwarded by the webworker. 
 
 Subscribe to events `io.on('event', fn)` is a local for each tab/window
+
 Emit any event/obj `io.emit('event', {data: 'blalba'})`. Missing acknowledgement callback param atm. 
+
 Connect and disconnect `io.emit('connect', fn)` is broadcasted to all tabs/windows
+
 Connection Manager `io.Manager` is not yet supported
 
 ```
