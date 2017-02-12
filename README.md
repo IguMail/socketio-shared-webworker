@@ -54,15 +54,22 @@ ws.on('error', function (data) {
 
 This is experimental prototype.
 
-Clone repo:
+To use in your project:
 
-`$ git clone https://github.com/IguMail/socketio-shared-webworker`
-`$ npm install`
-`$ npm start` 
+`npm install --save socketio-shared-webworker`
 
 To develop:
 
-`$ npm run dev`
+`$ git clone https://github.com/IguMail/socketio-shared-webworker`
+
+`$ npm install`
+
+`$ npm start` Starts the server
+
+`$ npm run dev` Starts dev server with HMR
+
+In chrome visit the URL: chrome://inspect/#workers so see shared webworkers and inspect, debug.
+Visit the `index.html` in the browser for the demo. 
 
 Production build
 
