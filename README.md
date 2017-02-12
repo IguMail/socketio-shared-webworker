@@ -8,7 +8,8 @@ https://github.com/socketio/socket.io-client
 
 **Quick Install**
 
-`<script src="https://rawgit.com/IguMail/socketio-shared-webworker/master/dist/socket.io-worker.bundle.js"></script>`
+`npm i --save 
+`<script src="dist/socket.io-worker.bundle.js"></script>`
 
 **Reason**
 
@@ -59,14 +60,30 @@ ws.on('error', function (data) {
 
 **Install**
 
-This is experimental prototype.
-
-To use in your project:
+Install locally using npm. (Alternatively clone the repo and look at `index.html` as an example)
 
 `npm install --save socketio-shared-webworker`
 
-You can use `require('socketio-shared-webworker')` in node or use the prebuilt version directly `<script src="dist/socket.io-worker.bundle.js"></script>`. 
-Note that you need to include socket.io as well. 
+To use in your nodejs based project:
+
+```
+var wio = require('socketio-shared-webworker')
+var ws = wio('http://localhost:8000/')
+ws.setWorker('node_modules/socketio-shared-webworker/shared-worker.js')
+
+```
+
+Use in HTML `wio` is global.
+
+```
+<script src="dist/socket.io-worker.bundle.js"></script>
+<script>
+var ws = wio('http://localhost:8000/')
+ws.setWorker('node_modules/socketio-shared-webworker/shared-worker.js')
+// use wio like io
+</script>
+
+```
 
 See `index.html` for an example. 
 
