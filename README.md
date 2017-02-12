@@ -13,6 +13,7 @@ https://github.com/socketio/socket.io-client
 **Reason**
 
 * It's more efficient to have a single websocket connection
+* Page refreshes and new tabs already have a websocket connection, so connection setup time is zero
 * The websocket connection runs in a separate thread/process so your UI is 'faster'
 * Cordination of event notifications is simpler as updates have a single source
 * Can be extended as a basis for IPC between your browser windows/tabs
