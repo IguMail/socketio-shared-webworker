@@ -8,8 +8,7 @@ https://github.com/socketio/socket.io-client
 
 **Quick Install**
 
-`npm i --save 
-`<script src="dist/socket.io-worker.bundle.js"></script>`
+`npm i --save socketio-shared-webworker`
 
 **Reason**
 
@@ -73,7 +72,7 @@ ws.setWorker('node_modules/socketio-shared-webworker/shared-worker.js')
 
 ```
 
-Use in HTML `wio` is global.
+Or to use in HTML `wio` is global.
 
 ```
 <script src="dist/socket.io-worker.bundle.js"></script>
@@ -84,6 +83,8 @@ ws.setWorker('node_modules/socketio-shared-webworker/shared-worker.js')
 </script>
 
 ```
+
+Note: `ws.setWorker('node_modules/socketio-shared-webworker/shared-worker.js')` should point to the shared-worker.js url relative to your HTML page base URL. Shared webworkers can only be loaded from the same domain like CORS. 
 
 See `index.html` for an example. 
 
