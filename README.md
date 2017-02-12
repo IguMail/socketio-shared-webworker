@@ -1,7 +1,10 @@
 
 **Socket.io inside a shared WebWorker**
 
-Running Socket.io in a shared webworker allows you to share a single Socket.io websocket connection for multiple browser windows and tabs. A drop in replacement for https://github.com/socketio/socket.io-client
+Running Socket.io in a shared webworker allows you to share a single Socket.io websocket connection for multiple browser windows and tabs. A drop in replacement for the socket.io client. 
+
+https://socket.io/
+https://github.com/socketio/socket.io-client
 
 **Reason**
 
