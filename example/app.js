@@ -1,11 +1,13 @@
 'use strict'
 
-var ws = wio('http://localhost:8000/')
-ws.setWorker('shared-worker.js')
+const wio = require('../src/socket.io-worker')
+
+var ws = wio('http://localhost:3000/')
+ws.setWorker('dist/shared-worker.js')
+console.log('connecting...')
 
 ws.on('connect', function() {
     console.log('connected!')
-
     ws.emit('message', 'Hi There!')
 })
 
@@ -20,6 +22,8 @@ ws.on('disconnect', function() {
 ws.on('error', function (data) {
     console.log('error', data)
 })
+
+setTimeout(() =>  ws.emit('message', 'Hello!'), 1000)
 
 if (typeof module !== 'undefined') {
     if (module.hot) {

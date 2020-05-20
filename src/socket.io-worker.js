@@ -21,16 +21,15 @@ class SharedWorkerSocketIO {
 
     startWorker() {
         this.log('Connecting to SharedWorker', this.workerUri)
-        this.worker = new window.SharedWorker(this.workerUri)
-        this.worker.port.addEventListener('message', function (event) {
-            this.log('<< message:', event.data.type, event.data.message)
-            events.emit(event.data.type, event.data.message)
-
+        this.worker = new window.SharedWorker(this.workerUri, this.socketUri)
+        this.worker.port.addEventListener('message', event => {
+            this.log('<< worker received message:', event.data.type, event.data.message)
+            this.events.emit(event.data.type, event.data.message)
         }, false)
 
-        this.worker.onerror = function (event) {
-            this.log('this.worker error', event)
-            events.emit('error', event)
+        this.worker.onerror = event => {
+            this.log('worker error', event)
+            this.events.emit('error', event)
         }
 
         this.worker.port.start()
@@ -51,14 +50,15 @@ class SharedWorkerSocketIO {
     }
 
     on(event, cb) {
-        this.log('on event', event)
         if (this.worker) {
+            this.log('worker add handler on event:', event)
             this.worker.port.postMessage({
                 eventType: 'on',
                 event: event
             })
             this.events.on(event, cb)
         } else {
+            this.log('socket add handler on event:', event)
             this.socket.on.apply(this, arguments)
         }
     }
@@ -76,6 +76,7 @@ class SharedWorkerSocketIO {
     }
 
     setWorker(uri) {
+        this.log('Setting worker', uri)
         this.workerUri = uri
         if (!this.started) {
             this.start()

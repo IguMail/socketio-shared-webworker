@@ -1,22 +1,15 @@
 const path = require('path');
-const webpack = require('webpack');
 const http = require('http')
 const express = require('express');
-const config = require('./webpack.config');
 const favicon = require('serve-favicon');
 
-const compiler = webpack(config);
 const app = express();
 const server = http.Server(app);
 const io = require('socket.io')(server);
 const debug = require('debug')
 
-app.use(require('webpack-dev-middleware')(compiler, {
-  publicPath: config.output.publicPath
-}));
-
-app.use(require('webpack-hot-middleware')(compiler));
-app.use(express.static('./example/public'))
+app.use(express.static('./public'))
+app.use(express.static('./dist'))
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 connectedSockets = 0;
@@ -36,9 +29,9 @@ io.on('connection',  socket => {
     });
 });
 
-server.listen(3000, err => {
+server.listen(8000, err => {
   if (err) {
     return console.error(err);
   }
-  console.log('Listening at http://localhost:3000/');
+  console.log('Listening at http://localhost:8000/');
 })

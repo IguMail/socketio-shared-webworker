@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
+    "start:io": "node server.js",
     "dev": "node example/dev-server.js",
     "build": "webpack --config webpack.config.prod.js"
   },
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/IguMail/socketio-shared-webworker#readme",
   "dependencies": {
+    "debug": "^4.1.1",
     "eventemitter3": "^1.2.0",
     "socket.io": "^2.3.0"
   },

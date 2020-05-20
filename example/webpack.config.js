@@ -6,20 +6,26 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     "socket.io": [
-      './node_modules/socket.io-client/dist/socket.io.js'
+      // error this not defined in worker scope
+      // maybe babel is adding it or socket.io is referencing window
+      './node_modules/socket.io-client/dist/socket.io.js' 
     ],
     "socket.io-worker": [
-      './socket.io-worker.js'
+      './src/socket.io-worker.js'
     ],
-    "example": [
+    "shared-worker": [
+      './src/shared-worker.js'
+    ],
+    "example.app": [
       'webpack-hot-middleware/client',
       './example/app.js'
     ]
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].dev.js',
-    publicPath: '/dist/'
+    filename: '[name].js',
+    publicPath: '/dist/',
+    globalObject: 'this' // https://github.com/webpack/webpack/issues/6642
   },
   devServer: {
     hot: true,

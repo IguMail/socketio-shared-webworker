@@ -1,7 +1,28 @@
-<script src="node_modules/socket.io-client/dist/socket.io.js"></script>
-<script src="dist/socket.io-worker.bundle.js"></script>
-<script src="dist/socket.io-worker.bundle.js"></script>
+<script src="socket.io-worker.js"></script>
 
 <h1>Socket.io Share WebWorker client example</h1>
 
 <p>Open devtools to see console logs</p>
+
+<script>
+var ws = wio('http://localhost:8000/')
+ws.setWorker('shared-worker.js')
+console.log('connecting...')
+
+ws.on('connect', function() {
+    console.log('connected!')
+    ws.emit('message', 'Hi There!')
+})
+
+ws.on('message', function (data) {
+    console.log('received message', data)
+})
+
+ws.on('disconnect', function() {
+    console.log('disconnected!')
+})
+
+ws.on('error', function (data) {
+    console.log('error', data)
+})
+</script>

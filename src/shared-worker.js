@@ -1,21 +1,10 @@
 'use strict';
 
-const log = (...args) => {
-    console.log(...args)
-}
+const log = console.log.bind(console)
 
-log('Loading shared worker')
+log('Loading shared worker', self.name)
 
-// try each possible socket.io location
-try {
-    importScripts('node_modules/socket.io-client/dist/socket.io.js')
-} catch(e) {
-    try {
-        importScripts('/node_modules/socket.io-client/dist/socket.io.js')
-    } catch(e) {
-        importScripts('../../node_modules/socket.io-client/dist/socket.io.js')
-    }
-}
+const io = require('socket.io-client')
 
 var socket = io(self.name),
     ports = [],
@@ -52,7 +41,7 @@ addEventListener('connect', function(event) {
     port.addEventListener('message', function(event) {
         
         var model = event.data
-        log('received message', model.eventType, model.event, model.data)
+        log('port received message', model.eventType, model.event, model.data)
         switch(model.eventType) {
             case 'on':
                 const eventName = model.event
@@ -68,6 +57,7 @@ addEventListener('connect', function(event) {
                     break;
                 }
                 socket.on(eventName, function(msg) {
+                    log('socket received message', msg)
                     port.postMessage({
                         type: eventName,
                         message: msg
@@ -82,4 +72,4 @@ addEventListener('connect', function(event) {
     })
 })
 
-module.exports = socket
+if (typeof module === 'object') module.exports = socket

@@ -4,12 +4,22 @@ var webpack = require('webpack');
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
-  entry: [
-    './socket.io-worker.js'
-  ],
+  entry: {
+    "socket.io": [
+      // error this not defined in worker scope
+      // maybe babel is adding it or socket.io is referencing window
+      './node_modules/socket.io-client/dist/socket.io.js' 
+    ],
+    "socket.io-worker": [
+      './src/socket.io-worker.js'
+    ],
+    "shared-worker": [
+      './src/shared-worker.js'
+    ],
+  },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'socket.io-worker.bundle.js',
+    filename: '[name].js',
     publicPath: '/dist/'
   },
   plugins: [],

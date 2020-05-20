@@ -1,1 +1,1 @@
-module.export = require('./socket.io-worker')
+module.export = require('./src/socket.io-worker')
