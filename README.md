@@ -3,8 +3,9 @@
 
 Running Socket.io in a shared webworker allows you to share a single Socket.io websocket connection for multiple browser windows and tabs. A drop in replacement for the socket.io client. 
 
-https://socket.io/
-https://github.com/socketio/socket.io-client
+* https://socket.io/
+* https://github.com/socketio/socket.io-client
+* https://github.com/IguMail/socketio-shared-webworker
 
 ##  Quick Install
 
@@ -97,7 +98,7 @@ ws.on('error', data => console.log('error', data))
 
 ## Using a specific `SharedWorker` script
 
-When using `ws.start()` the default worker located in `build/shared-worker-inline.js` is used. This worker is served inline using `URL.createObjectURL()` instead of being served over HTTP. This is limited to `Worker` and `SharedWorker` since `ServiceWorker` requires the same domain. (`ServiceWorker` is not yet supported)
+When using `ws.start()` the default worker located in `build/shared-worker-inline.js` is used. This worker is served inline using `URL.createObjectURL()` instead of being served over HTTP. This is limited to `Worker` and `SharedWorker` since `ServiceWorker` requires the same domain. (`ServiceWorker` is not supported)
 
 In order to specify the Worker script URL manually use: 
 
@@ -134,7 +135,10 @@ ws.start()
 // same as socket.io-client
 ```
 
-At the moment only `SharedWorker` and `Worker` are supported. `ServiceWorker` is not. 
+At the moment only `SharedWorker` and `Worker` are supported. 
+
+`ServiceWorker` is not supported since it is short lived. 
+>Please [create an issue](https://github.com/IguMail/socketio-shared-webworker/issues/new) if you have a use case for `ServiceWorker`.
 
 ### Develop
 
@@ -172,7 +176,11 @@ npm run build
 
 The builds will be placed in `build/` directory. Copy these to your `public/` directory in your server. 
 
-** To start the http and socket.io server to test the build **
+### Production usage
+
+The `public/index.html` is an example of usign the production build. 
+
+Start the production sample `server.js` with:
 
 ```bash
 npm start
