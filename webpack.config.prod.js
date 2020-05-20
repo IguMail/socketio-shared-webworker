@@ -1,5 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+
 
 module.exports = {
   mode: 'production',
@@ -22,11 +23,21 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/dist/'
   },
-  plugins: [],
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { 
+          from: path.resolve(__dirname, 'src', 'shared-worker.js'),
+          to: path.resolve(__dirname, 'dist', 'shared-worker-inline.js')
+        }
+      ],
+    }),
+  ],
   module: {
+    noParse: /\/dist\/.*/,
     rules: [{
       test: /\.m?js$/,
-      exclude: /(node_modules|bower_components)/,
+      exclude: /(node_modules|bower_components|dist)/,
       use: {
         loader: 'babel-loader',
         options: {

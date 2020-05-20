@@ -38,26 +38,16 @@ Connection Manager `io.Manager` is not yet supported
 
 ```js
 var ws = wio('http://localhost:8000/')
-ws.useWorker('shared-worker.js')
+ws.start() // use default SharedWorker script URL
 
-ws.on('connect', function() {
+// same as socket.io-client api: https://github.com/socketio/socket.io-client
+ws.on('connect', () => {
     console.log('connected!')
-    
-    ws.on('message', function (data) {
-        console.log('message', data)
-    })
-
     ws.emit('message', 'Hi There!')
 })
-
-ws.on('disconnect', function() {
-    console.log('disconnected!')
-})
-
-ws.on('error', function (data) {
-    console.log('error', data)
-})
-
+ws.on('message', data => console.log('received message', data))
+ws.on('disconnect', () => console.log('disconnected!'))
+ws.on('error', data => console.log('error', data))
 ```
 
 ## Install
@@ -68,17 +58,33 @@ Install locally using npm. (Alternatively clone the repo and look at `index.html
 npm install --save socketio-shared-webworker
 ```
 
-To use in your nodejs project:
-
-First make sure `node_modules/socketio-shared-webworker/dist/shared-worker.js` is served by your server. 
-As an example see `server.js` for an example `express` and `socket.io` server serving `dist/shared-worker.js` as `shared-worker.js` via `express.static`.
-
-You can also copy `dist/shared-worker.js` into your `public/` directory and serve that with `app.use(express.static('./public'))`.
+### To use in your nodejs project:
 
 ```js
 var wio = require('socketio-shared-webworker')
 var ws = wio('http://localhost:8000/')
-ws.useWorker('node_modules/socketio-shared-webworker/dist/shared-worker.js') // or just shared-worker.js if placed in public/
+ws.start() // use default SharedWorker script URL
+
+// same as socket.io-client
+ws.on('connect', () => {
+    console.log('connected!')
+    ws.emit('message', 'Hi There!')
+})
+
+ws.on('message', data => console.log('received message', data))
+ws.on('disconnect', () => console.log('disconnected!'))
+ws.on('error', data => console.log('error', data))
+```
+
+### To use in HTML `wio` is global.
+
+```html
+<script src="socket.io-worker.js"></script>
+<script>
+var ws = wio('http://localhost:8000/')
+ws.start() // use default SharedWorker script URL
+
+// same as socket.io-client
 ws.on('connect', () => {
     console.log('connected!')
     ws.emit('message', 'Hi There!')
@@ -86,23 +92,34 @@ ws.on('connect', () => {
 ws.on('message', data => console.log('received message', data))
 ws.on('disconnect', () => console.log('disconnected!'))
 ws.on('error', data => console.log('error', data))
-```
-
-Or to use in HTML `wio` is global.
-
-```html
-<script src="socket.io-worker.js"></script>
-<script>
-var ws = wio('http://localhost:8000/')
-ws.useWorker('node_modules/socketio-shared-webworker/dist/shared-worker.js')
-// use wio like io
 </script>
-
 ```
 
-Note: `ws.useWorker('node_modules/socketio-shared-webworker/shared-worker.js')` should point to the shared-worker.js url relative to your HTML page base URL. Shared webworkers can only be loaded from the same domain like CORS. 
+## Using a specific `SharedWorker` script
 
-See `index.html` for an example. 
+When using `ws.start()` the default worker located in `build/shared-worker-inline.js` is used. This worker is served inline using `URL.createObjectURL()` instead of being served over HTTP. This is limited to `Worker` and `SharedWorker` since `ServiceWorker` requires the same domain. (`ServiceWorker` is not yet supported)
+
+In order to specify the Worker script URL manually use: 
+
+```
+ws.useWorker('http/same/domain/url/to/shared-worker.js')
+```
+
+Note: `ws.useWorker('shared-worker.js')` should point to the `shared-worker.js` url relative to your HTML page base URL. 
+Shared webworkers can only be loaded from the same domain similar to CORS. 
+When installed into a project with `npm i socketio-shared-webworker` you will find the script in: `node_modules/socketio-shared-webworker/build/shared-worker.js`
+
+You may copy `dist/shared-worker.js` to your `public/` directory and serve using `express.static`. 
+An example of this is found in `server.js`. 
+You can also serve it as a regular JS file with Apache, Nginx etc. 
+
+```js
+var wio = require('socketio-shared-webworker')
+var ws = wio('http://localhost:8000/')
+ws.useWorker('shared-worker.js') // use a specific SharedWorker script URL
+// same as socket.io-client
+```
+
 
 ### Using a Worker instead of SharedWorker
 
@@ -113,7 +130,8 @@ If you want to specify using `Worker` specifically then use:
 var wio = require('socketio-shared-webworker')
 var ws = wio('http://localhost:8000/')
 ws.setWorkerType(Worker)
-ws.useWorker('node_modules/socketio-shared-webworker/dist/shared-worker.js')
+ws.start()
+// same as socket.io-client
 ```
 
 At the moment only `SharedWorker` and `Worker` are supported. `ServiceWorker` is not. 

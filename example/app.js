@@ -3,10 +3,9 @@
 const wio = require('../src/socket.io-worker')
 
 const ws = wio('http://localhost:3000/')
-const workerType = confirm('Use SharedWorker? (Will use Worker if no)') ? SharedWorker : Worker
-
-ws.setWorkerType(workerType)
-ws.useWorker('dist/shared-worker.js')
+//const workerType = confirm('Use SharedWorker? (Will use Worker if no)') ? SharedWorker : Worker
+//ws.setWorkerType(workerType)
+ws.start()
 console.log('connecting...')
 
 ws.on('connect', function() {

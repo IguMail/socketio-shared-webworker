@@ -2,6 +2,7 @@
 
 const EventEmitter = require('eventemitter3')
 const io = require('socket.io-client')
+require('../dist/shared-worker-inline.js')
 
 class SharedWorkerSocketIO {
 
@@ -22,8 +23,9 @@ class SharedWorkerSocketIO {
     }
 
     startWorker() {
-        this.log('Starting Worker', this.WorkerType, this.workerUri)
-        this.worker = new this.WorkerType(this.workerUri, {
+        const workerUri = this.getWorkerUri()
+        this.log('Starting Worker', this.WorkerType, workerUri)
+        this.worker = new this.WorkerType(workerUri, {
             name: this.socketUri
         })
         const port = this.worker.port || this.worker
@@ -84,6 +86,15 @@ class SharedWorkerSocketIO {
     setWorkerType(WorkerType) {
         this.log('Setting WorkerType', WorkerType)
         this.WorkerType = WorkerType
+    }
+
+    getWorkerObjectUrl() {
+        const script = '(' + SocketIoSharedWorker.toString() + ')()'
+        return window.URL.createObjectURL(new Blob([script], {type: 'application/javascript'}))
+    }
+
+    getWorkerUri() {
+        return this.workerUri || this.getWorkerObjectUrl()
     }
 
     useWorker(uri) {
