@@ -6,7 +6,8 @@
 
 <script>
 var ws = wio('http://localhost:8000/')
-ws.setWorker('shared-worker.js')
+ws.setWorkerType(confirm('Use SharedWorker? (Will use Worker if no)') ? SharedWorker : Worker)
+ws.useWorker('shared-worker.js')
 console.log('connecting...')
 
 ws.on('connect', function() {
@@ -25,4 +26,7 @@ ws.on('disconnect', function() {
 ws.on('error', function (data) {
     console.log('error', data)
 })
+
+
+setTimeout(() =>  ws.emit('message', 'Hello!'), 1000)
 </script>

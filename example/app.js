@@ -2,8 +2,11 @@
 
 const wio = require('../src/socket.io-worker')
 
-var ws = wio('http://localhost:3000/')
-ws.setWorker('dist/shared-worker.js')
+const ws = wio('http://localhost:3000/')
+const workerType = confirm('Use SharedWorker? (Will use Worker if no)') ? SharedWorker : Worker
+
+ws.setWorkerType(workerType)
+ws.useWorker('dist/shared-worker.js')
 console.log('connecting...')
 
 ws.on('connect', function() {
