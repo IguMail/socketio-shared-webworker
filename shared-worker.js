@@ -1,6 +1,10 @@
 'use strict';
 
-console.log('Loading shared worker')
+const log = (...args) => {
+    console.log(...args)
+}
+
+log('Loading shared worker')
 
 // try each possible socket.io location
 try {
@@ -43,12 +47,12 @@ addEventListener('connect', function(event) {
     ports.push(port)
     port.start()
 
-    console.log('client connected to worker', event)
+    log('client connected to worker', event)
 
     port.addEventListener('message', function(event) {
         
         var model = event.data
-        console.log('received message', model.eventType, model.event, model.data)
+        log('received message', model.eventType, model.event, model.data)
         switch(model.eventType) {
             case 'on':
                 const eventName = model.event
@@ -77,3 +81,5 @@ addEventListener('connect', function(event) {
  
     })
 })
+
+module.exports = socket

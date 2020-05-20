@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
+  mode: 'production',
   devtool: 'source-map',
   entry: [
     './socket.io-worker.js'
@@ -13,10 +14,15 @@ module.exports = {
   },
   plugins: [],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel-loader?presets[]=es2015,presets[]=stage-0'],
-      include: path.join(__dirname)
+    rules: [{
+      test: /\.m?js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+        }
+      }
     }]
   }
 }
