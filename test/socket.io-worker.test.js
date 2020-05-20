@@ -16,6 +16,7 @@ describe('socket.io-worker', () => {
 
     ws.on('message', event => {
         assert(event === hello)
+        if (ws.socket) ws.socket.close() // @todo fix
         done()
     })
   })
