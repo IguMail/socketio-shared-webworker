@@ -6,7 +6,7 @@ require('../dist/shared-worker-inline.js')
 
 class SharedWorkerSocketIO {
 
-    WorkerType = window.SharedWorker || window.Worker
+    WorkerType = global.SharedWorker || global.Worker
     worker = null
     workerUri = null
     socketUri = null
@@ -89,8 +89,8 @@ class SharedWorkerSocketIO {
     }
 
     getWorkerObjectUrl() {
-        const script = '(' + SocketIoSharedWorker.toString() + ')()'
-        return window.URL.createObjectURL(new Blob([script], {type: 'application/javascript'}))
+        const script = '(' + global.SocketIoSharedWorker.toString() + ')()'
+        return global.URL.createObjectURL(new Blob([script], {type: 'application/javascript'}))
     }
 
     getWorkerUri() {
@@ -114,4 +114,4 @@ class SharedWorkerSocketIO {
 
 SharedWorkerSocketIO.prototype.log = console.log.bind(console)
 
-module.exports = window.wio = uri => new SharedWorkerSocketIO(uri)
+module.exports = global.wio = uri => new SharedWorkerSocketIO(uri)

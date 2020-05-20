@@ -136,7 +136,21 @@ ws.start()
 
 At the moment only `SharedWorker` and `Worker` are supported. `ServiceWorker` is not. 
 
-### To develop:
+### Develop
+
+```bash
+git clone https://github.com/IguMail/socketio-shared-webworker
+cd socketio-shared-webworker
+npm install
+# Start example/dev-server.js with HMR
+npm run dev
+# edit example/app.js, src/shared-worker.js, src/socket.io-worker.js etc.
+``` 
+
+In chrome visit the URL: chrome://inspect/#workers so see shared webworkers and inspect, debug.
+Visit the `index.html` in the browser for the demo. 
+
+### Test
 
 ```bash
 git clone https://github.com/IguMail/socketio-shared-webworker
@@ -144,10 +158,11 @@ cd socketio-shared-webworker
 npm install
 # Start development server with HMR
 npm run dev
+# Run unit tests
+npm test 
+# Run e2e tests
+npm run test:e2e
 ``` 
-
-In chrome visit the URL: chrome://inspect/#workers so see shared webworkers and inspect, debug.
-Visit the `index.html` in the browser for the demo. 
 
 ### Production build
 

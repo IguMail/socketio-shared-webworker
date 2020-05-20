@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
+    "test:e2e": "npx cypress open",
     "start": "node server.js",
     "start:io": "node server.js",
     "dev": "node example/dev-server.js",
