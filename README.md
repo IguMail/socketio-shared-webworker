@@ -102,12 +102,20 @@ To develop:
 In chrome visit the URL: chrome://inspect/#workers so see shared webworkers and inspect, debug.
 Visit the `index.html` in the browser for the demo. 
 
-Production build
+### Production build
+
+```bash
+npm run build
+```
+
+The builds will be placed in `build/` directory. Copy these to your `public/` directory in your server. 
+
+** To start the http and socket.io server to test the build **
 
 `$ npm run build`
 
 
-***Based heavily on**
+### Based heavily on
 
 Thanks to.
 
