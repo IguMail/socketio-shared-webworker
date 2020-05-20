@@ -139,7 +139,7 @@ npm run build
 
 The builds will be placed in `build/` directory. Copy these to your `public/` directory in your server. 
 
-To start the http and socket.io server to test the build
+** To start the http and socket.io server to test the build **
 
 ```bash
 npm start
