@@ -6,6 +6,9 @@ const hello = 'Hi There!'
 
 describe('socket.io-worker', () => {
 
+  /**
+   * @note Jest tests will only use socket.io since webworkers is unavaible in Node.js
+   */
   it('Creates socket.io-worker', done => {
 
     const ws = wio('http://localhost:3000/')

@@ -2,7 +2,7 @@
 
 const EventEmitter = require('eventemitter3')
 const io = require('socket.io-client')
-require('../dist/shared-worker-inline.js')
+const SocketIoSharedWorker = require('./shared-worker')
 
 class SharedWorkerSocketIO {
 
@@ -12,6 +12,7 @@ class SharedWorkerSocketIO {
     socketUri = null
     events = new EventEmitter()
     socket = null
+    started = false
 
     constructor(socketUri) {
         this.log('SharedWorkerSocketIO ', socketUri)
@@ -42,6 +43,7 @@ class SharedWorkerSocketIO {
 
     emit(event, data, cb) {
         this.log('>> emit:', event, data, cb)
+        if (!this.started) this.start()
         if (this.worker) {
             // todo: ack cb
             const port = this.worker.port || this.worker
@@ -56,6 +58,7 @@ class SharedWorkerSocketIO {
     }
 
     on(event, cb) {
+        if (!this.started) this.start()
         if (this.worker) {
             this.log('worker add handler on event:', event)
             const port = this.worker.port || this.worker
@@ -71,6 +74,7 @@ class SharedWorkerSocketIO {
     }
 
     start() {
+        if (this.started) return
         this.started = true
         try {
             this.log('Attempting to start socket.io shared webworker')
@@ -89,7 +93,7 @@ class SharedWorkerSocketIO {
     }
 
     getWorkerObjectUrl() {
-        const script = '(' + global.SocketIoSharedWorker.toString() + ')()'
+        const script = '(' + SocketIoSharedWorker.toString() + ')()'
         return global.URL.createObjectURL(new Blob([script], {type: 'application/javascript'}))
     }
 

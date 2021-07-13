@@ -7,7 +7,7 @@
 <script>
 var ws = wio('http://localhost:8000/')
 ws.setWorkerType(confirm('Use SharedWorker? (Will use Worker if no)') ? SharedWorker : Worker)
-ws.useWorker('shared-worker-inline.js')
+//ws.useWorker('shared-worker-inline.js')
 console.log('connecting...')
 
 ws.on('connect', function() {
