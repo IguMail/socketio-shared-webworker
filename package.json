@@ -4,9 +4,10 @@
   "description": "SocketIO client running inside a shared WebWorker thread",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.test.js",
-    "test:e2e": "start-server-and-test dev http://localhost:3000 cypress",
-    "cypress": "npx cypress open",
+    "test": "start-server-and-test dev http://localhost:3000 test:mocha",
+    "test:e2e": "start-server-and-test dev http://localhost:3000 test:cypress",
+    "test:mocha": "mocha test/*.test.js",
+    "test:cypress": "npx cypress open",
     "start": "node server.js",
     "start:io": "node server.js",
     "dev": "node example/dev-server.js",
