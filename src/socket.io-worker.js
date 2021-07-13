@@ -13,14 +13,16 @@ class SharedWorkerSocketIO {
     events = new EventEmitter()
     socket = null
     started = false
+    opts = null
 
-    constructor(socketUri) {
+    constructor(socketUri, opts) {
         this.log('SharedWorkerSocketIO ', socketUri)
         this.socketUri = socketUri
+        this.opts = opts
     }
 
     startSocketIo() {
-        this.socket = io(this.socketUri)
+        this.socket = io(this.socketUri, this.opts)
     }
 
     startWorker() {
