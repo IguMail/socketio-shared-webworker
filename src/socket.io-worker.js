@@ -82,7 +82,7 @@ class SharedWorkerSocketIO {
             this.log('Attempting to start socket.io shared webworker')
             this.startWorker()
         } catch (e) {
-            this.log('Error starting socket.io shared webwoker', e)
+            this.log('Error starting socket.io shared webwoker')
             this.log('Starting socket.io instead')
             this.worker = null // disable worker
             this.startSocketIo()

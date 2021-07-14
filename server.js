@@ -32,6 +32,8 @@ io.on('connection',  socket => {
 server.listen(8000, err => {
   if (err) {
     return console.error(err);
+  } else {
+    const { family, address, port } = server.address()
+    console.log(`Listening at ${family} http://${address}:${port}`);
   }
-  console.log('Listening at http://localhost:8000/');
 })
